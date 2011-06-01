@@ -2,5 +2,5 @@ $("<link href='http://fonts.googleapis.com/css?family=Brawler' rel='stylesheet' 
 define ['GameState'], (GameState)->
   render: ->
     """
-    Sanctum Web
+    Phredd Web
     """

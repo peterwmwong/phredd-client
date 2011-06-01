@@ -2,7 +2,7 @@ $("<link href='http://fonts.googleapis.com/css?family=Brawler' rel='stylesheet' 
 define(['GameState'], function(GameState) {
   return {
     render: function() {
-      return "Sanctum Web";
+      return "Phredd Web";
     }
   };
 });
