@@ -1,0 +1,69 @@
+@import 'mixins/pos'
+@import 'mixins/border'
+@import 'mixins/box'
+@import 'mixins/colors'
+@import 'mixins/panel'
+
+.ManaPanel
+  Panel()
+
+  .container
+    height 100%
+    width 100%
+    display table
+    position relative
+    padding 10px 10px 3px 10px
+    -moz-box-sizing border-box
+    box-sizing border-box
+
+    > *
+      display table-row
+      > *
+        display table-cell
+        position relative
+
+    > .iconBar
+      line-height 8px
+
+      &.red
+        .icon
+          background-color red
+        .bar
+          background-color red
+      &.pink
+        .icon
+          background-color pink
+        .bar
+          background-color pink
+      &.yellow
+        .icon
+          background-color yellow
+        .bar
+          background-color yellow
+      &.blue
+        .icon
+          background-color blue
+        .bar
+          background-color blue
+      &.orange
+        .icon
+          background-color orange
+        .bar
+          background-color orange
+      &.green
+        .icon
+          background-color green
+        .bar
+          background-color green
+
+      >.iconContainer
+        width 24px
+        .icon
+          border-radius 3px
+          box-shadow inset 0px 1px 1px #222
+          margin-right 5px
+      
+      >.barContainer
+        .bar
+          box-shadow inset 0px 1px 1px #222
+          border-radius 3px

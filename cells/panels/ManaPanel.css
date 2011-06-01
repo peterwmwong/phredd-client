@@ -1,0 +1,101 @@
+.ManaPanel {
+  position: relative;
+  background-color: rgba(51,51,51,0.5);
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  -webkit-box-shadow: 0px 1px 5px #111;
+  -moz-box-shadow: 0px 1px 5px #111;
+  box-shadow: 0px 1px 5px #111;
+  padding: 5px;
+}
+.ManaPanel .container {
+  height: 100%;
+  width: 100%;
+  display: table;
+  position: relative;
+  padding: 10px 10px 3px 10px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.ManaPanel .container > * {
+  display: table-row;
+}
+.ManaPanel .container > * > * {
+  display: table-cell;
+  position: relative;
+}
+.ManaPanel .container > .iconBar {
+  line-height: 8px;
+}
+.ManaPanel .container > .iconBar.red .icon {
+  background-color: rgba(153,32,30,0.7);
+}
+.ManaPanel .container > .iconBar.red .bar {
+  background-color: rgba(153,32,30,0.7);
+}
+.ManaPanel .container > .iconBar.pink .icon {
+  background-color: rgba(153,94,94,0.7);
+}
+.ManaPanel .container > .iconBar.pink .bar {
+  background-color: rgba(153,94,94,0.7);
+}
+.ManaPanel .container > .iconBar.yellow .icon {
+  background-color: rgba(153,120,30,0.7);
+}
+.ManaPanel .container > .iconBar.yellow .bar {
+  background-color: rgba(153,120,30,0.7);
+}
+.ManaPanel .container > .iconBar.blue .icon {
+  background-color: rgba(30,93,153,0.7);
+}
+.ManaPanel .container > .iconBar.blue .bar {
+  background-color: rgba(30,93,153,0.7);
+}
+.ManaPanel .container > .iconBar.orange .icon {
+  background-color: rgba(153,79,30,0.7);
+}
+.ManaPanel .container > .iconBar.orange .bar {
+  background-color: rgba(153,79,30,0.7);
+}
+.ManaPanel .container > .iconBar.green .icon {
+  background-color: rgba(70,119,23,0.7);
+}
+.ManaPanel .container > .iconBar.green .bar {
+  background-color: rgba(70,119,23,0.7);
+}
+.ManaPanel .container > .iconBar >.iconContainer {
+  width: 24px;
+}
+.ManaPanel .container > .iconBar >.iconContainer .icon {
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  -webkit-box-shadow: inset 0px 1px 1px #222;
+  -moz-box-shadow: inset 0px 1px 1px #222;
+  box-shadow: inset 0px 1px 1px #222;
+  margin-right: 5px;
+}
+.ManaPanel .container > .iconBar >.barContainer .bar {
+  -webkit-box-shadow: inset 0px 1px 1px #222;
+  -moz-box-shadow: inset 0px 1px 1px #222;
+  box-shadow: inset 0px 1px 1px #222;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
