@@ -1,0 +1,42 @@
+.Game {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  color: #ddd;
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: #222;
+  z-index: 0;
+  overflow: hidden;
+}
+.Game > .ManaPanel {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  width: 200px;
+  height: 100px;
+}
+.Game > .CardPanel {
+  position: absolute;
+  right: 10px;
+  bottom: 0px;
+  left: 10px;
+  height: 100px;
+}
+.Game > .SelectedAreaPanel {
+  width: 200px;
+  position: absolute;
+  top: 140px;
+  bottom: 125px;
+  left: 10px;
+}
+.Game > .AreaPanel {
+  z-index: -1;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.Game > .ChatPanel {
+  background-color: #f00;
+}

@@ -1,0 +1,68 @@
+@import 'mixins/colors'
+@import 'mixins/box'
+@import 'mixins/border'
+@import 'mixins/panel'
+@import 'mixins/pos'
+@import 'mixins/gradient'
+
+border-tri(borderSize = 10px, borderColor = #555)
+  content ""
+  display block
+  border-color transparent transparent transparent borderColor 
+  border-style solid
+  border-width borderSize
+  height 0
+  width 0
+  z-index 2 
+
+triangle(size=8px,fgcolor,bordercolor,t=0px,r=0px,b=0px,l=0px)
+  &:before
+    abspos t r b l
+    border-tri size bordercolor
+
+  &:after
+    abspos (t + 2px) (r - 2px) b  l
+    border-tri (size - 2px) fgcolor
+
+
+.SelectedAreaPanel
+  Panel()
+
+  hgradient(rgba(#222,0.0),#333)
+  position relative
+  overflow visible
+
+  > .triangle
+    abspos 20px -4px false false
+    triangle(15px, #333, #181818)
+
+  > .unitgroup
+    abspos 0px 0px 0px 0px
+    margin 10px 5px 10px 0px
+    overflow-x hidden
+    overflow-y auto 
+
+    > .unit
+      position relative
+      height 75px
+
+      > .icon
+        abspos 15px false false 15px
+        width 50px
+        height 50px
+        background-image url('/phredd-client/images/unit.gif')
+        background-size 100%
+
+      > .info
+        abspos 10px 0px false 80px
+        > .name
+          padding 15px 0 0 0
+
+        > .healthbar
+          box-shadow inset 0px 1px 1px #111
+          margin 5px 0 5px 0
+          height 10px
+          width 75%
+          background-color red
+          border-radius 5px
+
