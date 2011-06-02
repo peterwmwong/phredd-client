@@ -25,10 +25,10 @@
   height: 100px;
 }
 .Game > .SelectedAreaPanel {
-  width: 200px;
+  width: 210px;
   position: absolute;
-  top: 140px;
-  bottom: 125px;
+  top: 135px;
+  bottom: 120px;
   left: 10px;
 }
 .Game > .AreaPanel {

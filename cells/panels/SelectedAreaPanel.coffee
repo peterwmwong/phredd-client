@@ -1,7 +1,6 @@
 define ['GameState'], (GameState)->
   render: (R)->
     """
-    <div class='triangle'>&nbsp;</div>
     <div class='unitgroup'>
     #{R ['Ant','Snake','Tiger','Leviathan'], (name)->"
       <div class='unit'>

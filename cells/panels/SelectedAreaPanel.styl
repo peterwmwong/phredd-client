@@ -26,23 +26,24 @@ triangle(size=8px,fgcolor,bordercolor,t=0px,r=0px,b=0px,l=0px)
 
 
 .SelectedAreaPanel
-  Panel()
-
-  hgradient(rgba(#222,0.0),#333)
   position relative
   overflow visible
 
-  > .triangle
-    abspos 20px -4px false false
-    triangle(15px, #333, #181818)
-
   > .unitgroup
     abspos 0px 0px 0px 0px
-    margin 10px 5px 10px 0px
+    margin 10px 0px 10px 0px
     overflow-x hidden
     overflow-y auto 
 
     > .unit
+      border-radius 5px
+      margin-bottom 10px
+
+      //gradient rgba(#111,.1) rgba(#111,.3)
+      //&:nth-child(2n)
+      background-color rgba(#111,.1)
+      //background-color rgba(#111,.1)
+
       position relative
       height 75px
 

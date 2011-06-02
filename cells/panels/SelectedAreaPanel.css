@@ -1,6 +1,18 @@
 .SelectedAreaPanel {
   position: relative;
-  background-color: rgba(51,51,51,0.5);
+  overflow: visible;
+}
+.SelectedAreaPanel > .unitgroup {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  margin: 10px 0px 10px 0px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.SelectedAreaPanel > .unitgroup > .unit {
   -moz-border-radius-topleft: 5px;
   -moz-border-radius-topright: 5px;
   -moz-border-radius-bottomright: 5px;
@@ -9,63 +21,8 @@
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
-  -webkit-box-shadow: 0px 1px 5px #111;
-  -moz-box-shadow: 0px 1px 5px #111;
-  box-shadow: 0px 1px 5px #111;
-  padding: 5px;
-  background: #2b2b2b;
-  background: -moz-linear-gradient(left, rgba(34,34,34,0) 0%, #333 100%);
-  background: linear-gradient(left, rgba(34,34,34,0) 0%, #333 100%);
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(34,34,34,0)), color-stop(100%, #333));
-  position: relative;
-  overflow: visible;
-}
-.SelectedAreaPanel > .triangle {
-  position: absolute;
-  top: 20px;
-  right: -4px;
-}
-.SelectedAreaPanel > .triangle:before {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  content: "";
-  display: block;
-  border-color: transparent transparent transparent #181818;
-  border-style: solid;
-  border-width: 15px;
-  height: 0;
-  width: 0;
-  z-index: 2;
-}
-.SelectedAreaPanel > .triangle:after {
-  position: absolute;
-  top: 2px;
-  right: -2px;
-  bottom: 0px;
-  left: 0px;
-  content: "";
-  display: block;
-  border-color: transparent transparent transparent #333;
-  border-style: solid;
-  border-width: 13px;
-  height: 0;
-  width: 0;
-  z-index: 2;
-}
-.SelectedAreaPanel > .unitgroup {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  margin: 10px 5px 10px 0px;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-.SelectedAreaPanel > .unitgroup > .unit {
+  margin-bottom: 10px;
+  background-color: rgba(17,17,17,0.1);
   position: relative;
   height: 75px;
 }
