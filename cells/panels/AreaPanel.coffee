@@ -1,9 +1,12 @@
 define ->
-  X_RESOLUTION	= 20
-  Y_RESOLUTION	= 20
+  XRES	= 20
+  YRES	= 20
+  XRES2	= XRES/2
+  YRES2	= XRES/2
   SURFACE_WIDTH = 400
   SURFACE_HEIGHT= 400
   DAMPEN = .9
+  projector = new THREE.Projector()
   defer = (t,f)-> setTimeout f,t
 
   init: ->
@@ -12,17 +15,42 @@ define ->
   render: -> "<div class='container'></div>"
 
   bind:
-    afterRender: -> defer 50, =>
+    #click: (ev)->
+    mousemove: (ev)->
       container = @$ '.container'
+      width = container.width()
+      height = container.height()
 
-      width = container.width()-15
-      height = container.height()-15
+      mouseX = ev.offsetX || (ev.clientX - 220)
+      mouseY = ev.offsetY || ev.clientY
+
+      vector = new THREE.Vector3((mouseX / width) * 2 - 1, -(mouseY / height) * 2 + 1, 0.5)
+      projector.unprojectVector vector, @camera
+
+      ray = new THREE.Ray @camera.position, vector.subSelf(@camera.position).normalize()
+      intersects = ray.intersectObject @surface
+
+      # if the ray intersects with the
+      # surface work out where
+      if intersects.length
+        iPoint = intersects[0].point
+        x = @selSurface?.position.x = Math.floor((iPoint.x / SURFACE_WIDTH) * XRES) * XRES + XRES2
+        y = @selSurface?.position.z = Math.floor((iPoint.z / SURFACE_HEIGHT) * YRES)* YRES + XRES2
+
+      else
+        @selSurface?.position.x = -5000
+        
+
+    afterRender: -> defer 1000, =>
+      container = @$ '.container'
+      width = container.width()
+      height = container.height()
 
       # Create Renderer
       renderer = new THREE.WebGLRenderer()
       #camera = new THREE.Camera 45, width/height, 1, 10000
       #
-      camera = new THREE.TrackballCamera
+      camera = @camera = new THREE.TrackballCamera
         fov: 25
         aspect: width / height
         near: 50
@@ -53,8 +81,8 @@ define ->
       scene = new THREE.Scene()
       $(window).resize ->
         if camera
-          width = container.width()-15
-          height = container.height()-15
+          width = container.width()
+          height = container.height()
           renderer.setSize( width, height )
           camera.aspect = width / height
           camera.updateProjectionMatrix()
@@ -75,23 +103,11 @@ define ->
       container.append renderer.domElement
 
       # Create Objects
-      planeMaterial =
-        new THREE.MeshLambertMaterial
-          color: 0x486F93
-          # map: ImageUtils.loadTexture "images/72lions_sterik.jpg"
-          shading: THREE.SmoothShading
-
-      planeMaterialWire =
-        new THREE.MeshLambertMaterial
-          color: 0xFFFFFF
-          wireframe:true
-          opacity: .2
-          shading: THREE.SmoothShading
-          #blending: THREE.AdditiveBlending
-          
-      surface =
-        new THREE.Mesh new THREE.Plane(SURFACE_WIDTH, SURFACE_HEIGHT, X_RESOLUTION, Y_RESOLUTION),
-          [planeMaterial]
+      surface = @surface =
+        new THREE.Mesh new THREE.Plane(SURFACE_WIDTH, SURFACE_HEIGHT, XRES, YRES),
+          [ new THREE.MeshLambertMaterial
+              color: 0x486F93
+              shading: THREE.SmoothShading ]
 
       surface.rotation.x = -Math.PI * .5
       surface.overdraw = true
@@ -118,20 +134,38 @@ define ->
 
         if vertex.position.y < (SURFACE_HEIGHT * .5)
           # connect above
-          vertex.springs.push start:sCount, end:sCount-(X_RESOLUTION+1)
+          vertex.springs.push start:sCount, end:sCount-(XRES+1)
 
         if vertex.position.y > (-SURFACE_HEIGHT * .5)
           # connect below
-          vertex.springs.push start:sCount, end:sCount+(X_RESOLUTION+1)
+          vertex.springs.push start:sCount, end:sCount+(XRES+1)
       scene.addChild surface
-
+ 
       surface =
-        new THREE.Mesh new THREE.Plane(SURFACE_WIDTH, SURFACE_HEIGHT, X_RESOLUTION, Y_RESOLUTION),
-          [planeMaterialWire]
+        new THREE.Mesh new THREE.Plane(SURFACE_WIDTH, SURFACE_HEIGHT, XRES, YRES),
+          [ new THREE.MeshLambertMaterial
+              color: 0xFFFFFF
+              wireframe:true
+              opacity: .2
+              shading: THREE.SmoothShading ]
       surface.rotation.x = -Math.PI * .5
       surface.overdraw = true
       surface.position.y += .5
       scene.addChild surface
+
+      selSurface = @selSurface =
+        new THREE.Mesh new THREE.Plane(XRES, YRES, XRES, YRES),
+          [ new THREE.MeshPhongMaterial
+              color: 0xFF0000
+              specular: 0xFF0000
+              ambient: 0xFF0000
+              opacity: 0.0
+              shading: THREE.SmoothShading]
+      @selSurface.rotation.x = -Math.PI * .5
+      @selSurface.overdraw = true
+      @selSurface.position.x = -5000
+      @selSurface.position.y = 1
+      scene.addChild @selSurface
 
       # Setup Light
       pointLight = new THREE.PointLight 0xFFFFFF, .6
@@ -146,15 +180,26 @@ define ->
       camLight.position.z = camera.position.z
       scene.addLight camLight
 
-      render = ->
-        camLight.position.x = camera.position.x
-        camLight.position.y = camera.position.y
-        camLight.position.z = camera.position.z
-        
-        #pointLight.position.x = camera.position.x / 3
-        #pointLight.position.z = camera.position.z / 3
-        if renderer then renderer.render scene, camera
-        update()
+      render = do->
+        isSelUp = true
+        ->
+          camLight.position.x = camera.position.x
+          camLight.position.y = camera.position.y
+          camLight.position.z = camera.position.z
+
+          opacity = selSurface.materials[0].opacity
+          if 0 > opacity or .3 < opacity
+            isSelUp = not isSelUp
+
+          if isSelUp
+            opacity += .01
+          else
+            opacity -= .01
+
+          selSurface.materials[0].opacity = opacity
+
+          if renderer then renderer.render scene, camera
+          update()
 
       # Update
       update = ->
