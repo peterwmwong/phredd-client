@@ -1,12 +1,9 @@
-@import 'mixins/border'
-@import 'mixins/box'
-@import 'mixins/colors'
-@import 'mixins/text'
+@import 'mixins/pos'
 
 .AreaPanel
-  border-radius 0px
-  font-family 'Brawler', arial, serif
-  font-weight bold
-  font-size 76px
-  color #111
-  text-shadow #333 0 1px 0, #000 0 -1px 0
+  position relative
+  width 100%
+  height 100%
+
+  > .container
+    abspos 0px 0px 0px 0px

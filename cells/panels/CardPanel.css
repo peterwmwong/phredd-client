@@ -1,27 +1,2 @@
-.CardPanel {
-  position: relative;
-  background: rgba(18,18,18,0.8);
-  background: -moz-linear-gradient(top, rgba(17,17,17,0.3) 0%, rgba(17,17,17,0.5) 100%);
-  background: linear-gradient(top, rgba(17,17,17,0.3) 0%, rgba(17,17,17,0.5) 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(17,17,17,0.3)), color-stop(100%, rgba(17,17,17,0.5)));
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(17,17,17,0.3)', endColorstr='rgba(17,17,17,0.5)',GradientType=0 );
-  -moz-border-radius-topleft: 5px;
-  -moz-border-radius-topright: 5px;
-  -moz-border-radius-bottomright: 5px;
-  -moz-border-radius-bottomleft: 5px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  -webkit-box-shadow: 0px 1px 5px #111;
-  -moz-box-shadow: 0px 1px 5px #111;
-  box-shadow: 0px 1px 5px #111;
-  padding: 5px;
-  vertical-align: top;
-  text-align: center;
-}
-.CardPanel .card {
-  display: inline-block;
-  padding: 5px;
-  height: 180px;
-}
+.CardPanel{position:relative;background-color:rgba(41,49,56,0.6);background-color:rgba(0,0,0,0.6);-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;-moz-border-radius-bottomright:0;-moz-border-radius-bottomleft:0;border-top-left-radius:5px;border-top-right-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;padding:5px;vertical-align:top;text-align:center;}
+.CardPanel .card{display:inline-block;padding:5px;height:180px}
