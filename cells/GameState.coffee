@@ -1,6 +1,6 @@
-define ['Events','PlayerState'], (Events,PlayerState)->
+define ['Events','PlayerState','data/GameService'], (Events, PlayerState, GameService)->
   class GameState extends Events
     constructor: ->
-      @playerState = new PlayerState()
+      @gid = 0
   
   new GameState()

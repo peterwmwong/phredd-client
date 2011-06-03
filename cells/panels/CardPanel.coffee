@@ -1,7 +1,5 @@
-define ['GameState'], (GameState)->
+define ['data/GameService'], (GameService)->
   render: (R,A)->
-    """
-    #{R GameState.playerState.cards, (card)-> "
-      <img class='card' src='#{card.imgUrl}' />
-    "}
-    """
+    GameService.getCards (cards)->
+      A R cards, (card)->
+        "<img class='card' src='#{card.imgUrl}' />"

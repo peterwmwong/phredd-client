@@ -1,6 +1,6 @@
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 define(function() {
-  var DAMPEN, SURFACE_HEIGHT, SURFACE_WIDTH, XRES, XRES2, YRES, YRES2, defer, projector;
+  var DAMPEN, SURFACE_HEIGHT, SURFACE_WIDTH, XRES, XRES2, YRES, YRES2, defer, getGridXY, projector;
   XRES = 20;
   YRES = 20;
   XRES2 = XRES / 2;
@@ -12,6 +12,29 @@ define(function() {
   defer = function(t, f) {
     return setTimeout(f, t);
   };
+  getGridXY = function(surfaceName) {
+    return function(ev) {
+      var container, h, intersects, p, ray, surf, sx, sy, vector, w, _ref;
+      surf = this[surfaceName];
+      container = this.$('.container');
+      w = container.width();
+      h = container.height();
+      sx = ev.offsetX || (ev.clientX - 220);
+      sy = ev.offsetY || ev.clientY;
+      vector = new THREE.Vector3((sx / w) * 2 - 1, -(sy / h) * 2 + 1, 0.5);
+      projector.unprojectVector(vector, this.camera);
+      ray = new THREE.Ray(this.camera.position, vector.subSelf(this.camera.position).normalize());
+      intersects = ray.intersectObject(this.surface);
+      if (p = (_ref = intersects[0]) != null ? _ref.point : void 0) {
+        if (surf != null) {
+          surf.position.x = Math.floor((p.x / SURFACE_WIDTH) * XRES) * XRES + XRES2;
+        }
+        return surf != null ? surf.position.z = Math.floor((p.z / SURFACE_HEIGHT) * YRES) * YRES + XRES2 : void 0;
+      } else {
+        return surf != null ? surf.position.x = -5000 : void 0;
+      }
+    };
+  };
   return {
     init: function() {
       return document.onselectstart = function() {
@@ -22,32 +45,21 @@ define(function() {
       return "<div class='container'></div>";
     },
     bind: {
-      mousemove: function(ev) {
-        var container, height, iPoint, intersects, mouseX, mouseY, ray, vector, width, x, y, _ref, _ref2, _ref3;
-        container = this.$('.container');
-        width = container.width();
-        height = container.height();
-        mouseX = ev.offsetX || (ev.clientX - 220);
-        mouseY = ev.offsetY || ev.clientY;
-        vector = new THREE.Vector3((mouseX / width) * 2 - 1, -(mouseY / height) * 2 + 1, 0.5);
-        projector.unprojectVector(vector, this.camera);
-        ray = new THREE.Ray(this.camera.position, vector.subSelf(this.camera.position).normalize());
-        intersects = ray.intersectObject(this.surface);
-        if (intersects.length) {
-          iPoint = intersects[0].point;
-          x = (_ref = this.selSurface) != null ? _ref.position.x = Math.floor((iPoint.x / SURFACE_WIDTH) * XRES) * XRES + XRES2 : void 0;
-          return y = (_ref2 = this.selSurface) != null ? _ref2.position.z = Math.floor((iPoint.z / SURFACE_HEIGHT) * YRES) * YRES + XRES2 : void 0;
-        } else {
-          return (_ref3 = this.selSurface) != null ? _ref3.position.x = -5000 : void 0;
-        }
-      },
+      mousemove: getGridXY('hoverSurface'),
+      click: getGridXY('selSurface'),
       afterRender: function() {
         return defer(1000, __bind(function() {
-          var camLight, camera, container, height, pointLight, render, renderer, sCount, scene, selSurface, surface, surfaceVerts, update, vertex, width;
+          var c, camLight, camera, container, height, hoverSurface, pointLight, render, renderer, sCount, scene, selSurface, surface, surfaceVerts, update, vertex, width;
           container = this.$('.container');
           width = container.width();
           height = container.height();
           renderer = new THREE.WebGLRenderer();
+          THREE.TrackballCamera.prototype.STATE = {
+            NONE: -1,
+            ROTATE: 1,
+            ZOOM: 2,
+            PAN: 0
+          };
           camera = this.camera = new THREE.TrackballCamera({
             fov: 25,
             aspect: width / height,
@@ -145,6 +157,20 @@ define(function() {
           surface.overdraw = true;
           surface.position.y += .5;
           scene.addChild(surface);
+          hoverSurface = this.hoverSurface = new THREE.Mesh(new THREE.Plane(XRES, YRES, XRES, YRES), [
+            new THREE.MeshPhongMaterial({
+              color: c = 0x555555,
+              specular: c,
+              ambient: c,
+              opacity: 0.5,
+              shading: THREE.SmoothShading
+            })
+          ]);
+          this.hoverSurface.rotation.x = -Math.PI * .5;
+          this.hoverSurface.overdraw = true;
+          this.hoverSurface.position.x = -5000;
+          this.hoverSurface.position.y = 1;
+          scene.addChild(this.hoverSurface);
           selSurface = this.selSurface = new THREE.Mesh(new THREE.Plane(XRES, YRES, XRES, YRES), [
             new THREE.MeshPhongMaterial({
               color: 0xFF0000,

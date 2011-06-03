@@ -6,12 +6,12 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-define(['Events', 'PlayerState'], function(Events, PlayerState) {
+define(['Events', 'PlayerState', 'data/GameService'], function(Events, PlayerState, GameService) {
   var GameState;
   GameState = (function() {
     __extends(GameState, Events);
     function GameState() {
-      this.playerState = new PlayerState();
+      this.gid = 0;
     }
     return GameState;
   })();

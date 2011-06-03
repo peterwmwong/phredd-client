@@ -1,9 +1,11 @@
-define(['GameState'], function(GameState) {
+define(['data/GameService'], function(GameService) {
   return {
     render: function(R, A) {
-      return "" + (R(GameState.playerState.cards, function(card) {
-        return "  <img class='card' src='" + card.imgUrl + "' />";
-      }));
+      return GameService.getCards(function(cards) {
+        return A(R(cards, function(card) {
+          return "<img class='card' src='" + card.imgUrl + "' />";
+        }));
+      });
     }
   };
 });

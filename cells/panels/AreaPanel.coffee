@@ -8,6 +8,25 @@ define ->
   DAMPEN = .9
   projector = new THREE.Projector()
   defer = (t,f)-> setTimeout f,t
+  getGridXY = (surfaceName)->
+    (ev)->
+      surf = @[surfaceName]
+      container = @$ '.container'
+      w = container.width()
+      h = container.height()
+
+      sx = ev.offsetX || (ev.clientX - 220)
+      sy = ev.offsetY || ev.clientY
+      vector = new THREE.Vector3((sx / w) * 2 - 1, -(sy / h) * 2 + 1, 0.5)
+      projector.unprojectVector vector, @camera
+
+      ray = new THREE.Ray @camera.position, vector.subSelf(@camera.position).normalize()
+      intersects = ray.intersectObject @surface
+      if p = intersects[0]?.point
+        surf?.position.x = Math.floor((p.x / SURFACE_WIDTH) * XRES) * XRES + XRES2
+        surf?.position.z = Math.floor((p.z / SURFACE_HEIGHT) * YRES)* YRES + XRES2
+      else
+        surf?.position.x = -5000
 
   init: ->
     document.onselectstart = -> false
@@ -15,32 +34,8 @@ define ->
   render: -> "<div class='container'></div>"
 
   bind:
-    #click: (ev)->
-    mousemove: (ev)->
-      container = @$ '.container'
-      width = container.width()
-      height = container.height()
-
-      mouseX = ev.offsetX || (ev.clientX - 220)
-      mouseY = ev.offsetY || ev.clientY
-
-      vector = new THREE.Vector3((mouseX / width) * 2 - 1, -(mouseY / height) * 2 + 1, 0.5)
-      projector.unprojectVector vector, @camera
-
-      ray = new THREE.Ray @camera.position, vector.subSelf(@camera.position).normalize()
-      intersects = ray.intersectObject @surface
-
-      # if the ray intersects with the
-      # surface work out where
-      if intersects.length
-        iPoint = intersects[0].point
-        x = @selSurface?.position.x = Math.floor((iPoint.x / SURFACE_WIDTH) * XRES) * XRES + XRES2
-        y = @selSurface?.position.z = Math.floor((iPoint.z / SURFACE_HEIGHT) * YRES)* YRES + XRES2
-
-      else
-        @selSurface?.position.x = -5000
-        
-
+    mousemove: getGridXY 'hoverSurface'
+    click: getGridXY 'selSurface'
     afterRender: -> defer 1000, =>
       container = @$ '.container'
       width = container.width()
@@ -49,7 +44,12 @@ define ->
       # Create Renderer
       renderer = new THREE.WebGLRenderer()
       #camera = new THREE.Camera 45, width/height, 1, 10000
-      #
+      THREE.TrackballCamera.prototype.STATE=
+        NONE: -1
+        ROTATE: 1
+        ZOOM: 2
+        PAN: 0
+      
       camera = @camera = new THREE.TrackballCamera
         fov: 25
         aspect: width / height
@@ -152,6 +152,20 @@ define ->
       surface.overdraw = true
       surface.position.y += .5
       scene.addChild surface
+
+      hoverSurface = @hoverSurface =
+        new THREE.Mesh new THREE.Plane(XRES, YRES, XRES, YRES),
+          [ new THREE.MeshPhongMaterial
+              color: c = 0x555555
+              specular: c
+              ambient: c
+              opacity: 0.5
+              shading: THREE.SmoothShading]
+      @hoverSurface.rotation.x = -Math.PI * .5
+      @hoverSurface.overdraw = true
+      @hoverSurface.position.x = -5000
+      @hoverSurface.position.y = 1
+      scene.addChild @hoverSurface
 
       selSurface = @selSurface =
         new THREE.Mesh new THREE.Plane(XRES, YRES, XRES, YRES),
