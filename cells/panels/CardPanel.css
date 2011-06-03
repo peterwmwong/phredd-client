@@ -1,2 +1,2 @@
 .CardPanel{position:relative;background-color:rgba(0,0,0,0.6);-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;-moz-border-radius-bottomright:0;-moz-border-radius-bottomleft:0;border-top-left-radius:5px;border-top-right-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;padding:5px;vertical-align:top;text-align:center;}
-.CardPanel .card{display:inline-block;padding:5px;height:180px}
+.CardPanel .card{display:inline-block;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;-moz-border-radius-bottomright:5px;-moz-border-radius-bottomleft:5px;border-top-left-radius:5px;border-top-right-radius:5px;border-bottom-right-radius:5px;border-bottom-left-radius:5px;margin:5px;height:180px}
