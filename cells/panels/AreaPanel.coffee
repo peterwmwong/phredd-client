@@ -44,11 +44,6 @@ define ->
       # Create Renderer
       renderer = new THREE.WebGLRenderer()
       #camera = new THREE.Camera 45, width/height, 1, 10000
-      THREE.TrackballCamera.prototype.STATE=
-        NONE: -1
-        ROTATE: 1
-        ZOOM: 2
-        PAN: 0
       
       camera = @camera = new THREE.TrackballCamera
         fov: 25
@@ -59,13 +54,15 @@ define ->
         rotateSpeed: .1
 
         noZoom: false
+        wheelZoom: true
+        wheelZoomSpeed: 0.03
         noPan: false
 
         staticMoving: false
         dynamicDampingFactor: 0.3
 
         minDistance: 500 * 1.1
-        maxDistance: 1000 * 10
+        maxDistance: 500 * 10
 
         domElement: renderer.domElement
 

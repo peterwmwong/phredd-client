@@ -54,12 +54,6 @@ define(function() {
           width = container.width();
           height = container.height();
           renderer = new THREE.WebGLRenderer();
-          THREE.TrackballCamera.prototype.STATE = {
-            NONE: -1,
-            ROTATE: 1,
-            ZOOM: 2,
-            PAN: 0
-          };
           camera = this.camera = new THREE.TrackballCamera({
             fov: 25,
             aspect: width / height,
@@ -67,11 +61,13 @@ define(function() {
             far: 1e300,
             rotateSpeed: .1,
             noZoom: false,
+            wheelZoom: true,
+            wheelZoomSpeed: 0.03,
             noPan: false,
             staticMoving: false,
             dynamicDampingFactor: 0.3,
             minDistance: 500 * 1.1,
-            maxDistance: 1000 * 10,
+            maxDistance: 500 * 10,
             domElement: renderer.domElement
           });
           camera.rotateCamera = function() {};
